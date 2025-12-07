@@ -1,0 +1,16 @@
+@startuml StandartContext
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(user, "User", "Пользователь системы")
+Person(manager, "Manager", "Менеджер банка")
+System(bank, "Bank", "Банковская система")
+System_Ext(telecom, "Telecom", "Телеком оператор")
+System_Ext(creditHistorySystem, "Credit history system", "Бюро кредитных историй")
+System_Ext(partnerCallCenter, "External Call Center", "Партнерский колцентр")
+
+Rel(user, bank, "Просматривает информацию, подает заявки")
+Rel(manager, bank, "Создает и обрабатывает заявки пользователей")
+Rel(bank, telecom, "Отправляет СМС")
+Rel(bank, creditHistorySystem, "Запрашивает кредитную историю клиента")
+Rel(bank, partnerCallCenter, "Отправляет на почту данные по депозитным ставкам")
+@enduml

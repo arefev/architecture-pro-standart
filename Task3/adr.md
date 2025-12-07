@@ -50,6 +50,7 @@
 | +R8    | Перевести интернет-банк на микросервисную архитектуру в части задачи открытия депозитов. В качестве брокера сообщений использовать Kafka                                |
 
 ### **Решение**
+
 [Диаграмма контекста](../out/Task3/schemas/standart_context/StandartContext.png)
 
 [Диаграмма контейнеров](../out/Task3/schemas/standart_container/StandartContainer.png)
