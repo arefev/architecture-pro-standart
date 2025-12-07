@@ -17,3 +17,7 @@
 
 - [ADR](./Task4/adr.md)
 - [Roadmap](./Task4/RoadMap_bank_Standart.drawio)
+
+## Задание 5
+
+- [ADR](./Task5/adr.md)
