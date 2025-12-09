@@ -1,0 +1,58 @@
+@startuml StandartContainer
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+
+
+
+Person(user, "User", "User system")
+Person(manager, "Office manager", "Менеджеры банка")
+Person(managerCallCenter, "Call center manager", "Менеджеры колцентра")
+
+System_Boundary(bank, "Bank system"){
+    Container(apiGateway, "API Gateway", "Kong")
+
+    Container(bankAppBff, "Bank BFF", "Go", "Backend for frontend")
+    Container(bankAppDepositService, "Bank deposit service", "PHP", "")
+    ContainerDb(bankAppDepositServiceDb, "Bank deposit service DB", "PostgreSQL")
+
+    Container(notificationService, "NotificationService", "PHP", "")
+
+    Container(eventService, "EventService", "PHP", "")
+    Container(eventServiceMessages, "EventServiceMessages", "Kafka", "")
+
+    Container(bankApp, "Bank Application", "ASP.NET MVC 4.5", "Интернет-банк")
+    ContainerDb(bankAppDb, "Database for bank application", "MS SQL")
+
+    Container(abs, "АБС", "Delphi")
+    ContainerDb(absDb, "СУБД АБС", "СУБД на Oracle")
+
+    Container(callCenter, "Колцентр", "Java Spring Boot")
+    ContainerDb(callCenterDb, "СУБД Колцентра", "PostgreSQL")
+}
+
+Container_Ext(telecom, "Телеком оператор", "")
+Container_Ext(extCallCenter, "Партнерский колцентр", "")
+
+Rel_D(user, apiGateway, "Uses", "HTTPS")
+Rel_D(manager, apiGateway, "Uses", "HTTPS")
+Rel_D(apiGateway, bankApp, "Uses", "HTTPS")
+Rel_D(apiGateway, bankAppBff, "Uses", "HTTPS")
+Rel_D(bankAppBff, bankAppDepositService, "Uses", "gRPC")
+Rel_D(bankAppBff, eventService, "Uses", "gRPC")
+Rel(eventService, eventServiceMessages, "")
+Rel(bankAppDepositService, bankAppDepositServiceDb, "")
+Rel(bankAppDepositService, eventServiceMessages, "")
+Rel(notificationService, eventServiceMessages, "")
+Rel(notificationService, telecom, "")
+Rel(notificationService, extCallCenter, "")
+Rel(manager, abs, "")
+Rel(bankApp, bankAppDb, "")
+Rel(abs, absDb, "")
+
+Rel(callCenter, callCenterDb, "")
+Rel(callCenter, eventServiceMessages, "")
+Rel(abs, eventService, "")
+Rel(managerCallCenter, callCenter, "")
+
+@enduml
